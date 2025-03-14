@@ -1,0 +1,251 @@
+/* src/components/auth/AuthSlider.css */
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Optional: If not already loaded, add in your public/index.html:
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+*/
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Main slider container */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* Forms container (holds both sign-in and sign-up forms) */
+.forms-container {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #fff;
+  transition: all 0.6s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* The block that holds the forms */
+.signin-signup {
+  position: relative;
+  width: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+/* Sign In Form */
+form.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 3rem;
+  transition: all 0.2s 0.7s;
+}
+form.sign-up-form {
+  display: none; /* Initially hidden */
+}
+
+/* When sign-up-mode is active, toggle form visibility */
+.container.sign-up-mode form.sign-in-form {
+  display: none;
+}
+.container.sign-up-mode form.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 3rem;
+  transition: all 0.2s 0.7s;
+}
+
+/* Form elements */
+form h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+.input-field {
+  max-width: 350px;
+  width: 100%;
+  height: 50px;
+  background-color: #f0f0f0;
+  margin: 8px 0;
+  border-radius: 50px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.5rem;
+}
+.input-field i {
+  text-align: center;
+  line-height: 50px;
+  color: #acacac;
+  font-size: 1rem;
+}
+.input-field input {
+  background: none;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
+  padding-right: 10px;
+}
+
+/* Button styling */
+.btn {
+  width: 130px;
+  height: 45px;
+  border: none;
+  outline: none;
+  border-radius: 45px;
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  font-weight: 600;
+  margin: 12px 0;
+  transition: all 0.4s;
+  text-transform: uppercase;
+}
+.btn:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+}
+
+/* Social section */
+.social-text {
+  margin: 8px 0;
+  font-size: 0.9rem;
+  color: #444;
+}
+.social-media {
+  display: flex;
+  justify-content: center;
+}
+.social-icon {
+  height: 40px;
+  width: 40px;
+  margin: 0 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #333;
+  border-radius: 50%;
+  font-size: 1rem;
+  transition: all 0.4s;
+  cursor: pointer;
+  background: none;
+}
+.social-icon:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* Panels container (right half of the slider) */
+.panels-container {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  transition: all 0.6s ease-in-out;
+}
+.panels-container .content {
+  text-align: center;
+}
+.panels-container h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #333;
+}
+.panels-container p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #555;
+}
+.panels-container button {
+  padding: 0.6rem 1.4rem;
+  border-radius: 30px;
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 600;
+}
+.panels-container button:hover {
+  background: #555;
+}
+
+/* Toggle: When sign-up-mode is active, swap panel content */
+.container.sign-up-mode .panels-container .content {
+  /* For a smooth transition, you might add additional transforms if desired */
+}
+ 
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #666;
+  z-index: 999;
+  transition: color 0.3s;
+}
+.close-btn:hover {
+  color: #333;
+}
+
+/* Error message */
+.error-message {
+  font-size: 0.85rem;
+  color: #e63946;
+  background-color: rgba(230,57,70,0.1);
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-top: 5px;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+  .container {
+    border-radius: 0;
+  }
+  .forms-container, .panels-container {
+    width: 100%;
+  }
+  .panels-container {
+    display: none; /* Hide panels on small screens */
+  }
+  form {
+    padding: 0 1.5rem;
+  }
+}

@@ -34,7 +34,7 @@ const HossLimoLogo = () => (
 );
 
 const Navbar: React.FC = () => {
-  const { currentUser, logout } = useAuth();
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authType, setAuthType] = useState<'login' | 'signup'>('login');
@@ -57,11 +57,7 @@ const Navbar: React.FC = () => {
     }
   };
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
-
-  // Determine if we're on the homepage to set the navbar background
+  const isActive = (path: string) => location.pathname === path;
   const isHomePage = location.pathname === '/';
 
   return (
@@ -144,20 +140,19 @@ const Navbar: React.FC = () => {
             />
           </Link>
 
-          {currentUser ? (
-            <div className="relative ml-4">
-              <button
-                onClick={handleLogout}
-                className="group relative uppercase text-sm font-medium transition-all duration-300 ease-in-out text-white hover:text-gold hover:scale-105 hover:tracking-wide"
-                style={{ position: 'relative', display: 'inline-block' }}
-              >
-                LOGOUT
-                <span
-                  className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-                  style={{ display: 'block' }}
-                />
-              </button>
-            </div>
+          {/* Auth Buttons */}
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="group relative uppercase text-sm font-medium transition-all duration-300 ease-in-out text-white hover:text-gold hover:scale-105 hover:tracking-wide"
+              style={{ position: 'relative', display: 'inline-block' }}
+            >
+              LOGOUT
+              <span
+                className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
+                style={{ display: 'block' }}
+              />
+            </button>
           ) : (
             <div className="flex space-x-4 ml-4">
               <button
@@ -191,7 +186,6 @@ const Navbar: React.FC = () => {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             {isMenuOpen ? (
               <path
@@ -222,7 +216,9 @@ const Navbar: React.FC = () => {
           <Link
             to="/"
             className={`group block py-2 transition-all duration-300 ease-in-out ${
-              isActive('/') ? 'text-gold' : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
+              isActive('/')
+                ? 'text-gold'
+                : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
             }`}
             onClick={() => setIsMenuOpen(false)}
             style={{ position: 'relative', display: 'inline-block' }}
@@ -236,7 +232,9 @@ const Navbar: React.FC = () => {
           <Link
             to="/booking"
             className={`group block py-2 transition-all duration-300 ease-in-out ${
-              isActive('/booking') ? 'text-gold' : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
+              isActive('/booking')
+                ? 'text-gold'
+                : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
             }`}
             onClick={() => setIsMenuOpen(false)}
             style={{ position: 'relative', display: 'inline-block' }}
@@ -250,7 +248,9 @@ const Navbar: React.FC = () => {
           <Link
             to="/fleet"
             className={`group block py-2 transition-all duration-300 ease-in-out ${
-              isActive('/fleet') ? 'text-gold' : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
+              isActive('/fleet')
+                ? 'text-gold'
+                : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
             }`}
             onClick={() => setIsMenuOpen(false)}
             style={{ position: 'relative', display: 'inline-block' }}
@@ -264,7 +264,9 @@ const Navbar: React.FC = () => {
           <Link
             to="/services"
             className={`group block py-2 transition-all duration-300 ease-in-out ${
-              isActive('/services') ? 'text-gold' : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
+              isActive('/services')
+                ? 'text-gold'
+                : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
             }`}
             onClick={() => setIsMenuOpen(false)}
             style={{ position: 'relative', display: 'inline-block' }}
@@ -278,7 +280,9 @@ const Navbar: React.FC = () => {
           <Link
             to="/about"
             className={`group block py-2 transition-all duration-300 ease-in-out ${
-              isActive('/about') ? 'text-gold' : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
+              isActive('/about')
+                ? 'text-gold'
+                : 'text-white hover:text-gold hover:scale-105 hover:tracking-wide'
             }`}
             onClick={() => setIsMenuOpen(false)}
             style={{ position: 'relative', display: 'inline-block' }}
@@ -290,23 +294,21 @@ const Navbar: React.FC = () => {
             />
           </Link>
 
-          {currentUser ? (
-            <>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsMenuOpen(false);
-                }}
-                className="group block py-2 text-white hover:text-gold hover:scale-105 hover:tracking-wide transition-all duration-300 ease-in-out"
-                style={{ position: 'relative', display: 'inline-block' }}
-              >
-                Logout
-                <span
-                  className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-                  style={{ display: 'block' }}
-                />
-              </button>
-            </>
+          {user ? (
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsMenuOpen(false);
+              }}
+              className="group block py-2 text-white hover:text-gold hover:scale-105 hover:tracking-wide transition-all duration-300 ease-in-out"
+              style={{ position: 'relative', display: 'inline-block' }}
+            >
+              Logout
+              <span
+                className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
+                style={{ display: 'block' }}
+              />
+            </button>
           ) : (
             <>
               <button
@@ -343,13 +345,11 @@ const Navbar: React.FC = () => {
       )}
 
       {/* Auth Modal */}
-      {showAuthModal && (
-        <AuthModal
-          isOpen={showAuthModal}
-          onClose={closeAuthModal}
-          initialView={authType}
-        />
-      )}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={closeAuthModal}
+        initialView={authType} 
+      />
     </nav>
   );
 };

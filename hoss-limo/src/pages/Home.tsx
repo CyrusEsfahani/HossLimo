@@ -14,8 +14,42 @@ const Home: React.FC = () => {
         backgroundVideo="/assets/videos/webpage.mp4" // Replace with your video path
       />
       
-      {/* Features Section */}
-      <section className="section bg-white">
+
+      <section className="bg-white py-12">
+        <div className="container-custom grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div
+            className="overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
+          >
+            <img
+              src="/assets/images/city.png"
+              alt="Orange County"
+              className="w-full h-auto object-cover"
+            />
+          </div>
+          <div>
+            <h2 className="text-3xl font-bold mb-4">Discover Orange County</h2>
+            <p className="text-gray-700 mb-4">
+              Orange County is known for its beautiful beaches, vibrant culture, and 
+              world-class attractions. Whether you're here for business or leisure, 
+              there's always something to explore.
+            </p>
+            <ul className="list-disc list-inside text-gray-700 mb-4">
+              <li>Home to John Wayne Airport (SNA)</li>
+              <li>Famous beaches like Laguna, Newport, and Huntington</li>
+              <li>Attractions like Disneyland and Knott’s Berry Farm</li>
+              <li>Year-round sunshine and mild climate</li>
+            </ul>
+            <Link
+              to="/services"
+              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Book Your Ride in OC
+            </Link>
+          </div>
+        </div>
+      </section>
+ {/* Features Section */}
+ <section className="section bg-white">
         <div className="container-custom">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Hoss Limo</h2>
@@ -78,7 +112,7 @@ const Home: React.FC = () => {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="h-48 overflow-hidden">
                 <img 
-                  src="/src/assets/images/vehicles/sedan.jpg" 
+                  src="/assets/images/privateJet.png" 
                   alt="Airport Transfer" 
                   className="w-full h-full object-cover"
                 />
@@ -97,7 +131,7 @@ const Home: React.FC = () => {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="h-48 overflow-hidden">
                 <img 
-                  src="/src/assets/images/vehicles/suv.jpg" 
+                  src="/assets/images/corporate.png" 
                   alt="Corporate Travel" 
                   className="w-full h-full object-cover"
                 />
@@ -116,7 +150,7 @@ const Home: React.FC = () => {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="h-48 overflow-hidden">
                 <img 
-                  src="/src/assets/images/vehicles/limo.jpg" 
+                  src="/assets/images/specialevent.png" 
                   alt="Special Events" 
                   className="w-full h-full object-cover"
                 />
@@ -141,7 +175,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       
-      {/* Testimonials Section */}
+      {/* Testimonials Section
       <section className="section bg-white">
         <div className="container-custom">
           <div className="text-center mb-14">
@@ -204,7 +238,7 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       
       {/* CTA Section */}
       <section className="py-16 bg-primary text-white">
