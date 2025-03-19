@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../hooks/useAuth';
 import { createReservation } from '../../services/reservationService';
+import { FirebaseError } from '@firebase/app'; // Import FirebaseError type
 
 const vehicleTypes = [
   { id: 'sedan', name: 'Luxury Sedan', capacity: 3 },
@@ -16,7 +17,7 @@ interface BookingFormProps {
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({ onSuccess }) => {
-  const { user } = useAuth(); // Changed from currentUser to user
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -51,7 +52,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSuccess }) => {
         .max(12, 'Maximum 12 passengers allowed'),
     }),
     onSubmit: async (values) => {
-      if (!user) { // Changed from currentUser to user
+      if (!user) {
         setErrorMessage('You must be logged in to book a ride');
         return;
       }
@@ -60,8 +61,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSuccess }) => {
       setErrorMessage(null);
 
       try {
+        // Force token refresh to ensure a valid authentication token
+        await user.getIdToken(true);
+
         const reservationData = {
-          userId: user.uid, // Changed from currentUser to user
+          userId: user.uid,
           pickupLocation: values.pickupLocation,
           dropoffLocation: values.dropoffLocation,
           pickupDate: values.pickupDate,
@@ -75,15 +79,26 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSuccess }) => {
         const reservationId = await createReservation(reservationData);
         onSuccess(reservationId);
       } catch (error) {
+        // Enhanced error logging with type narrowing
         console.error('Error creating reservation:', error);
-        setErrorMessage('Failed to create reservation. Please try again.');
+        if (error instanceof FirebaseError) {
+          console.error('Error code:', error.code);
+          console.error('Error message:', error.message);
+          setErrorMessage(`Failed to create reservation: ${error.message}`);
+        } else if (error instanceof Error) {
+          console.error('Error message:', error.message);
+          setErrorMessage(`Failed to create reservation: ${error.message}`);
+        } else {
+          console.error('Unknown error:', error);
+          setErrorMessage('Failed to create reservation. Please try again.');
+        }
       } finally {
         setIsLoading(false);
       }
     },
   });
 
-  const selectedVehicle = vehicleTypes.find(v => v.id === formik.values.vehicleType);
+  const selectedVehicle = vehicleTypes.find((v) => v.id === formik.values.vehicleType);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

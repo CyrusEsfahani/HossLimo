@@ -1,100 +1,253 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt, faPhone, faEnvelope, faClock, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
+
+// Define quick links with correct routes
+const quickLinks = [
+  { name: 'Home', path: '/' },
+  { name: 'What We Offer', path: '/services' },
+  { name: 'Our Story', path: '/about' },
+  { name: 'Contact Us', path: '/contact' },
+  { name: 'Book Now', path: '/booking' },
+];
+
+// Define services (non-link items)
+const services = [
+  'Airport Transfers',
+  'Corporate Travel',
+  'Special Events',
+  'Point to Point',
+  'Hourly Charter',
+];
+
+// Define the HossLimoLogo component with customizable width and height
+const HossLimoLogo = ({ width = 150, height = 30 }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 300 60"
+    width={width}
+    height={height}
+  >
+    <defs>
+      <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: "#FFD700", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#DAA520", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text
+      x="10"
+      y="40"
+      fontFamily="'Cinzel', serif"
+      fontSize="36"
+      fontWeight="700"
+      fill="url(#goldGradient)"
+      letterSpacing="1.5"
+    >
+      HOSS LIMO
+    </text>
+    <rect
+      x="10"
+      y="45"
+      width="130"
+      height="1"
+      fill="url(#goldGradient)"
+      opacity="0.7"
+    />
+  </svg>
+);
 
 const Footer: React.FC = () => {
+  const goldColor = '#D4AF37'; // Gold color for consistency
+
+  // State to track scroll position
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Update scroll progress on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <footer className="bg-primary text-white">
-      <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="md:col-span-1">
-            <Link to="/" className="flex items-center mb-4">
-              <img src="/logo.png" alt="Hoss Limo" className="h-10" />
-              <span className="ml-2 text-xl font-serif font-bold">Hoss Limo</span>
-            </Link>
-            <p className="text-gray-300 mb-4">
-              Luxury transportation services for any occasion. Experience comfort and elegance with our professional chauffeur service.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-accent">
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24h-1.918c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
-                </svg>
-              </a>
-              <a href="#" className="text-gray-300 hover:text-accent">
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-              </a>
-              <a href="#" className="text-gray-300 hover:text-accent">
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-gray-300 hover:text-accent">Home</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-gray-300 hover:text-accent">What We Offer</Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-gray-300 hover:text-accent">Our Story</Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-300 hover:text-accent">Contact Us</Link>
-              </li>
-              <li>
-                <Link to="/booking" className="text-gray-300 hover:text-accent">Book Now</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Our Services</h3>
-            <ul className="space-y-2">
-              <li className="text-gray-300">Airport Transfers</li>
-              <li className="text-gray-300">Corporate Travel</li>
-              <li className="text-gray-300">Special Events</li>
-              <li className="text-gray-300">Point to Point</li>
-              <li className="text-gray-300">Hourly Charter</li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <div className="space-y-3">
-              <p className="flex items-start text-gray-300">
-                <svg className="h-5 w-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
-                </svg>
-                123 Main Street, Los Angeles, CA 90001
-              </p>
-              <p className="flex items-center text-gray-300">
-                <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20 4h-16c-1.1 0-1.99.9-1.99 2l-.01 12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2zm-.4 4.25l-7.07 4.42c-.32.2-.74.2-1.06 0l-7.07-4.42c-.25-.16-.4-.43-.4-.72 0-.67.73-1.07 1.3-.72l6.7 4.2 6.7-4.2c.57-.35 1.3.05 1.3.72 0 .29-.15.56-.4.72z" />
-                </svg>
-                info@hosslimo.com
-              </p>
-              <p className="flex items-center text-gray-300">
-                <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10z" />
-                </svg>
-                (555) 123-4567
-              </p>
-            </div>
-          </div>
-        </div>
+    <motion.footer
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, type: 'spring', stiffness: 80 }}
+      viewport={{ once: true }}
+      className="bg-[#1C2526] text-white py-20 relative overflow-hidden"
+    >
+      {/* Subtle Background Gradient */}
+      <div className="absolute inset-0 z-0">
+        <div className="w-full h-full bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
       </div>
-    </footer>
+
+      <div className="container-custom relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          {/* Company Info with Logo */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.8, type: 'spring', stiffness: 100 }}
+            className="space-y-6"
+          >
+            <Link to="/" className="inline-block hover:scale-105 transition-transform duration-300">
+              <HossLimoLogo width={240} height={48} />
+            </Link>
+            <p className="text-gray-300 leading-relaxed">
+              Discover a new standard of luxury travel with Hoss Limo, ensuring every mile is as luxurious as your destination.
+            </p>
+            <div className="space-y-3 text-gray-400">
+              <p className="flex items-center">
+                <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-3 text-gold" /> Orange County, CA
+              </p>
+              <p className="flex items-center">
+                <FontAwesomeIcon icon={faPhone} className="mr-3 text-gold" />{' '}
+                <a href="tel:+15551234567" className="text-gold hover:underline">
+                  (949)-981-8497
+                </a>
+              </p>
+              <p className="flex items-center">
+                <FontAwesomeIcon icon={faEnvelope} className="mr-3 text-gold" />{' '}
+                <a href="mailto:info@hosslimo.com" className="text-gold hover:underline">
+                  hossein48.esfahani@gmail.com
+                </a>
+              </p>
+              <p className="flex items-center">
+                <FontAwesomeIcon icon={faClock} className="mr-3 text-gold" /> 24 Hours Support Everyday
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Quick Links with Enhanced Animations */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.8, type: 'spring', stiffness: 100 }}
+          >
+            <h3 className="text-xl font-bold mb-6 text-gold">Quick Links</h3>
+            <ul className="space-y-3">
+              {quickLinks.map((link, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  whileHover={{ scale: 1.05, color: '#D4AF37' }}
+                  transition={{
+                    delay: index * 0.15,
+                    duration: 0.5,
+                    type: 'spring',
+                    stiffness: 120,
+                  }}
+                >
+                  <Link
+                    to={link.path}
+                    className="text-gray-400 transition-all duration-300 ease-in-out relative group"
+                  >
+                    {link.name}
+                    <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Services with Enhanced Animations */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.8, type: 'spring', stiffness: 100 }}
+          >
+            <h3 className="text-xl font-bold mb-6 text-gold">Our Services</h3>
+            <ul className="space-y-3 text-gray-400">
+              {services.map((service, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  whileHover={{ scale: 1.05, color: '#D4AF37' }}
+                  transition={{
+                    delay: index * 0.15,
+                    duration: 0.5,
+                    type: 'spring',
+                    stiffness: 120,
+                  }}
+                  className="relative group"
+                >
+                  {service}
+                  <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Book Now Button with Enhanced Animation */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            animate={{ scale: [1, 1.06, 1], rotate: [0, 5, -5, 0] }}
+            transition={{
+              delay: 0.8,
+              duration: 0.8,
+              animate: { duration: 2.5, repeat: Infinity, ease: 'easeInOut' },
+            }}
+            className="flex justify-end"
+          >
+            <Link
+              to="/booking"
+              className="relative inline-flex items-center justify-center w-16 h-16 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-110 group"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+              <span className="absolute inset-0 rounded-full border-2 border-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Footer Bottom with Separator Removed */}
+        <div className="mt-12 text-center text-gray-400 text-sm">
+          © 2025 Hoss Limo. All rights reserved.
+        </div>
+
+        {/* Enhanced Back-to-Top Button with Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-8 right-8 flex items-center gap-4"
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1, duration: 0.6, type: 'spring', stiffness: 100 }}
+        >
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: 90 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="bg-gold text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-gold/90 transition-all duration-300"
+            aria-label="Back to top"
+          >
+            <FontAwesomeIcon icon={faArrowUp} size="lg" />
+          </motion.button>
+          <motion.div
+            className="w-2 h-20 bg-gray-600 rounded-l-lg overflow-hidden"
+            initial={{ height: 0 }}
+            animate={{ height: scrollProgress > 0 ? '100%' : '0%' }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              className="w-full h-full bg-gold"
+              style={{ height: `${scrollProgress}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.footer>
   );
 };
 

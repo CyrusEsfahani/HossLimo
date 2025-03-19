@@ -1,12 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
-import { ComponentType } from 'react';
-
-// Type assertion for social icons
-const FacebookIcon = FaFacebookF as ComponentType;
-const InstagramIcon = FaInstagram as ComponentType;
-const TwitterIcon = FaTwitter as ComponentType;
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const About: React.FC = () => {
   return (
@@ -14,7 +9,7 @@ const About: React.FC = () => {
       {/* Hero Section with Image Wrapped Around */}
       <div
         className="relative bg-cover bg-center bg-no-repeat w-full h-[400px] md:h-[600px] lg:h-[800px]"
-        style={{ backgroundImage: "url('/assets/images/SUV.png')" }}
+        // style={{ backgroundImage: "url('/assets/images/SUV.png')" }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="container-custom relative z-10 flex items-center justify-center h-full">
@@ -58,7 +53,7 @@ const About: React.FC = () => {
             </div>
             <div>
               <img
-                src="/assets/images/SUV.png" // Use the same image as the hero for consistency, or replace with a different one if desired
+                src="/assets/images/SUV.png"
                 alt="Luxury Vehicle"
                 className="w-full h-auto rounded-lg shadow-lg"
               />
@@ -85,7 +80,7 @@ const About: React.FC = () => {
             </div>
             <div>
               <img
-                src="/assets/images/SUV.png" // Replace with a different image if available
+                src="/assets/images/SUV.png"
                 alt="Luxury Interior"
                 className="w-full h-auto rounded-lg shadow-lg"
               />
@@ -118,103 +113,6 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1">
-              <img src="/logo-white.png" alt="Hoss Limo" className="h-8 mb-4" />
-              <h3 className="text-xl font-serif font-bold mb-4">Hoss Limo</h3>
-              <p className="text-gray-400 mb-4">
-                Luxury transportation services for any occasion. Experience comfort and elegance with our professional chauffeur service.
-              </p>
-              <div className="flex space-x-4">
-                <a href="#" className="text-white hover:text-gold">
-                  <FacebookIcon />
-                </a>
-                <a href="#" className="text-white hover:text-gold">
-                  <InstagramIcon />
-                </a>
-                <a href="#" className="text-white hover:text-gold">
-                  <TwitterIcon />
-                </a>
-              </div>
-            </div>
-
-            <div className="col-span-1">
-              <h3 className="text-lg font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link to="/" className="text-gray-400 hover:text-white">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/services" className="text-gray-400 hover:text-white">
-                    What We Offer
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about" className="text-gray-400 hover:text-white">
-                    Our Story
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-gray-400 hover:text-white">
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/booking" className="text-gray-400 hover:text-white">
-                    Book Now
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-span-1">
-              <h3 className="text-lg font-bold mb-4">Our Services</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Airport Transfers
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Corporate Travel
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Special Events
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Point to Point
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    Hourly Charter
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-span-1">
-              <h3 className="text-lg font-bold mb-4">Contact Us</h3>
-              <ul className="space-y-2">
-                <li className="text-gray-400">123 Main Street, Los Angeles, CA 90001</li>
-                <li className="text-gray-400">info@hosslimo.com</li>
-                <li className="text-gray-400">(949) 981-8417</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
