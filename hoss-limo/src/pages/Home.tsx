@@ -14,48 +14,40 @@ const Home: React.FC = () => {
         backgroundVideo="/assets/videos/webpage.mp4" // Replace with your video path
       />
 
-      <section className="bg-white py-16">
-        <div className="container-custom grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="overflow-hidden rounded-lg shadow-xl transition-transform duration-500 hover:scale-102 group">
-            <img
-              src="/assets/images/city.png"
-              alt="Orange County"
-              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-          <div className="px-4 md:px-6">
-            <h2 className="text-3xl font-bold mb-6 relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-1/2 after:h-1 after:bg-blue-600 after:rounded-full pb-3">
-              Discover Orange County
-            </h2>
-            <p className="text-gray-700 mb-6 text-lg leading-relaxed">
-              Orange County captivates with pristine beaches, vibrant cultural scenes, and 
-              world-renowned attractions. Whether you're visiting for business endeavors 
-              or leisurely pursuits, this coastal paradise offers unforgettable experiences 
-              at every turn.
-            </p>
-            <ul className="space-y-3 text-gray-700 mb-8">
-              {[
-                "Premier access to John Wayne Airport (SNA)",
-                "Iconic beaches including Laguna, Newport, and Huntington",
-                "World-class attractions such as Disneyland and Knott's Berry Farm",
-                "Idyllic year-round Mediterranean climate"
-              ].map((item, index) => (
-                <li key={index} className="flex items-center">
-                  <span className="inline-block w-5 h-5 mr-3 bg-blue-600 rounded-full flex-shrink-0"></span>
-                  <span className="text-lg">{item}</span>
-                </li>
-              ))}
-            </ul>
-            <Link
-              to="/services"
-              className="inline-block px-8 py-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:translate-y-[-5px] font-medium text-lg"
-            >
-              Experience Orange County
-            </Link>
-          </div>
-        </div>
-      </section>
-
+<section className="bg-white py-16">
+  <div className="container-custom grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div className="overflow-hidden rounded-lg shadow-xl transition-transform duration-500 hover:scale-102 group">
+      <img
+        src="/assets/images/city.png"
+        alt="Orange County"
+        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+    </div>
+    <div className="px-4 md:px-6">
+      <h2 className="text-3xl font-bold mb-6 relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-1/2 after:h-1 after:bg-blue-600 after:rounded-full pb-3">
+        Discover Orange County
+      </h2>
+      <p className="text-gray-700 mb-6 text-lg leading-relaxed">
+        Orange County captivates with pristine beaches, vibrant cultural scenes, and 
+        world-renowned attractions. Whether you're visiting for business endeavors 
+        or leisurely pursuits, this coastal paradise offers unforgettable experiences 
+        at every turn.
+      </p>
+      <div className="space-y-3 text-gray-700 mb-8">
+        <p className="text-lg">Premier access to John Wayne Airport (SNA)</p>
+        <p className="text-lg">Iconic beaches including Laguna, Newport, and Huntington</p>
+        <p className="text-lg">World-class attractions such as Disneyland and Knott's Berry Farm</p>
+        <p className="text-lg">Idyllic year-round Mediterranean climate</p>
+      </div>
+      <Link
+        to="/services"
+        className="inline-block px-8 py-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:translate-y-[-5px] font-medium text-lg"
+      >
+        Experience Orange County
+      </Link>
+    </div>
+  </div>
+</section>
       {/* Features Section */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container-custom">

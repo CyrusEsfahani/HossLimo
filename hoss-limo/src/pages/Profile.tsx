@@ -65,53 +65,128 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     return <Navigate to="/" />;
   }
 
-  if (loading) {
-    return <div className="container-custom py-12 pt-20 text-center text-gray-700">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="container-custom py-12 pt-20 text-center text-red-600">{error}</div>;
-  }
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="container-custom py-12 pt-20" // Added pt-20 to avoid nav overlap
-    >
-      <h1 className="text-4xl font-bold mb-8 text-center">Your Reservations</h1>
-      {reservations.length === 0 ? (
-        <p className="text-center text-gray-700">You have no reservations yet.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reservations.map((reservation, index) => (
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+      {/* Main Content */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="container-custom pt-32 pb-20 px-4 sm:px-6 lg:px-8"
+      >
+        {/* Title Section */}
+        <motion.h1
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-5xl sm:text-6xl font-extrabold text-center mb-12 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600"
+        >
+          Your Reservations
+        </motion.h1>
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center text-gray-400 text-lg">
             <motion.div
-              key={reservation.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col"
-            >
-              <p><strong>Date:</strong> {reservation.pickupDate}</p>
-              <p><strong>Time:</strong> {reservation.pickupTime}</p>
-              <p><strong>Pickup Location:</strong> {reservation.pickupLocation}</p>
-              <p><strong>Dropoff Location:</strong> {reservation.dropoffLocation}</p>
-              <p><strong>Vehicle Type:</strong> {reservation.vehicleType}</p>
-              <p><strong>Passengers:</strong> {reservation.passengers}</p>
-              <p><strong>Status:</strong> {reservation.status}</p>
-              {reservation.specialRequests && (
-                <p><strong>Special Requests:</strong> {reservation.specialRequests}</p>
-              )}
-              <p><strong>Created At:</strong> {new Date(reservation.createdAt).toLocaleString()}</p>
-              <p className="text-sm text-gray-600 mt-auto">Reservation ID: {reservation.id}</p>
-            </motion.div>
-          ))}
-        </div>
-      )}
-    </motion.div>
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+              className="inline-block w-8 h-8 border-4 border-t-transparent border-yellow-400 rounded-full"
+            />
+            <p className="mt-4">Loading your reservations...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center text-red-400 text-lg">
+            <p>{error}</p>
+          </div>
+        )}
+
+        {/* Reservations Grid */}
+        {!loading && !error && (
+          <>
+            {reservations.length === 0 ? (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center text-gray-400 text-lg"
+              >
+                You have no reservations yet. Book a luxury ride today!
+              </motion.p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {reservations.map((reservation, index) => (
+                  <motion.div
+                    key={reservation.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ scale: 1.03, y: -5 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="relative bg-white/10 backdrop-blur-lg rounded-xl p-6 shadow-xl border border-gray-700/50 hover:shadow-2xl transition-all duration-300 flex flex-col"
+                  >
+                    {/* Status Badge */}
+                    <span
+                      className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold ${
+                        reservation.status === 'pending'
+                          ? 'bg-yellow-500/20 text-yellow-300'
+                          : 'bg-green-500/20 text-green-300'
+                      }`}
+                    >
+                      {reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)}
+                    </span>
+
+                    {/* Reservation Details */}
+                    <div className="space-y-3 text-gray-200">
+                      <p>
+                        <strong className="text-yellow-400">Date: </strong>
+                        {reservation.pickupDate}
+                      </p>
+                      <p>
+                        <strong className="text-yellow-400">Time: </strong>
+                        {reservation.pickupTime}
+                      </p>
+                      <p>
+                        <strong className="text-yellow-400">Pickup: </strong>
+                        {reservation.pickupLocation}
+                      </p>
+                      <p>
+                        <strong className="text-yellow-400">Dropoff: </strong>
+                        {reservation.dropoffLocation}
+                      </p>
+                      <p>
+                        <strong className="text-yellow-400">Vehicle: </strong>
+                        {reservation.vehicleType}
+                      </p>
+                      <p>
+                        <strong className="text-yellow-400">Passengers: </strong>
+                        {reservation.passengers}
+                      </p>
+                      {reservation.specialRequests && (
+                        <p>
+                          <strong className="text-yellow-400">Special Requests: </strong>
+                          {reservation.specialRequests}
+                        </p>
+                      )}
+                      <p>
+                        <strong className="text-yellow-400">Created: </strong>
+                        {new Date(reservation.createdAt).toLocaleString()}
+                      </p>
+                      <p className="text-sm text-gray-400 mt-4">
+                        <strong className="text-yellow-400">Reservation ID: </strong>
+                        {reservation.id}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </motion.div>
+    </div>
   );
 };
 

@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
           <Link
             to={user ? "/booking" : "#"}
             onClick={(e) => {
-              console.log('Book Now clicked, user:', user); // Add this line
+              console.log('Book Now clicked, user:', user);
               if (!user) {
                 e.preventDefault();
                 handleAuthClick("login");
@@ -205,183 +205,202 @@ const Navbar: React.FC = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <svg
-            className={`w-6 h-6 ${textColor}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Mobile Menu Button and Sliding Drawer */}
+        <div className="md:hidden fixed z-50">
+          {/* Hamburger Button */}
+          <button
+            className="fixed top-4 right-4 z-50 w-10 h-10 flex items-center justify-center focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
-      </div>
+            <svg
+              className={`w-6 h-6 ${textColor}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {isMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden mt-2 py-2 px-4 bg-transparent">
-          <Link
-            to="/"
-            className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} ${
-              isActive("/") ? "text-gold" : ""
-            } hover:scale-105 hover:tracking-wide`}
-            onClick={() => setIsMenuOpen(false)}
-            style={{ position: "relative", display: "inline-block" }}
-          >
-            Home
-            <span
-              className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-              style={{ display: "block" }}
-            />
-          </Link>
-          <Link
-            to={user ? "/booking" : "#"}
-            onClick={(e) => {
-              if (!user) {
-                e.preventDefault();
-                handleAuthClick("login");
-                setIsMenuOpen(false);
-              } else {
-                setIsMenuOpen(false);
-              }
-            }}
-            className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} ${
-              isActive("/booking") ? "text-gold" : ""
-            } hover:scale-105 hover:tracking-wide`}
-            style={{ position: "relative", display: "inline-block" }}
-          >
-            Book Now
-            <span
-              className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-              style={{ display: "block" }}
-            />
-          </Link>
-          <Link
-            to="/fleet"
-            className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} ${
-              isActive("/fleet") ? "text-gold" : ""
-            } hover:scale-105 hover:tracking-wide`}
-            onClick={() => setIsMenuOpen(false)}
-            style={{ position: "relative", display: "inline-block" }}
-          >
-            Our Fleet
-            <span
-              className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-              style={{ display: "block" }}
-            />
-          </Link>
-          <Link
-            to="/services"
-            className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} ${
-              isActive("/services") ? "text-gold" : ""
-            } hover:scale-105 hover:tracking-wide`}
-            onClick={() => setIsMenuOpen(false)}
-            style={{ position: "relative", display: "inline-block" }}
-          >
-            What We Offer
-            <span
-              className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-              style={{ display: "block" }}
-            />
-          </Link>
-          <Link
-            to="/about"
-            className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} ${
-              isActive("/about") ? "text-gold" : ""
-            } hover:scale-105 hover:tracking-wide`}
-            onClick={() => setIsMenuOpen(false)}
-            style={{ position: "relative", display: "inline-block" }}
-          >
-            Our Story
-            <span
-              className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-              style={{ display: "block" }}
-            />
-          </Link>
-          {user && (
-            <Link
-              to="/profile"
-              className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} ${
-                isActive("/profile") ? "text-gold" : ""
-              } hover:scale-105 hover:tracking-wide`}
+          {/* Sliding Drawer Overlay */}
+          {isMenuOpen && (
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"
               onClick={() => setIsMenuOpen(false)}
-              style={{ position: "relative", display: "inline-block" }}
-            >
-              Profile
-              <span
-                className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-                style={{ display: "block" }}
-              />
-            </Link>
+            />
           )}
 
-          {user ? (
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsMenuOpen(false);
-              }}
-              className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} hover:scale-105 hover:tracking-wide`}
-              style={{ position: "relative", display: "inline-block" }}
-            >
-              Logout
-              <span
-                className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-                style={{ display: "block" }}
-              />
-            </button>
-          ) : (
-            <>
-              <button
-                onClick={() => {
-                  handleAuthClick("login");
-                  setIsMenuOpen(false);
-                }}
-                className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} hover:scale-105 hover:tracking-wide`}
-                style={{ position: "relative", display: "inline-block" }}
+          {/* Sliding Drawer Menu */}
+          <div
+            className={`
+              fixed top-0 right-0 w-64 h-full 
+              bg-white dark:bg-gray-800 
+              shadow-lg 
+              transform transition-transform duration-300 ease-in-out
+              ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+              z-50 p-6
+            `}
+          >
+            <div className="flex flex-col space-y-4 mt-12">
+              <Link
+                to="/"
+                className={`
+                  group relative block py-2 text-lg uppercase
+                  ${textColor} ${hoverColor}
+                  ${isActive("/") ? "text-gold" : ""}
+                  transition-all duration-300 ease-in-out
+                `}
+                onClick={() => setIsMenuOpen(false)}
               >
-                Login
-                <span
-                  className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-                  style={{ display: "block" }}
-                />
-              </button>
-              <button
-                onClick={() => {
-                  handleAuthClick("signup");
-                  setIsMenuOpen(false);
+                Home
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </Link>
+
+              <Link
+                to={user ? "/booking" : "#"}
+                onClick={(e) => {
+                  if (!user) {
+                    e.preventDefault();
+                    handleAuthClick("login");
+                    setIsMenuOpen(false);
+                  } else {
+                    setIsMenuOpen(false);
+                  }
                 }}
-                className={`group block py-2 transition-all duration-300 ease-in-out ${textColor} ${hoverColor} hover:scale-105 hover:tracking-wide`}
-                style={{ position: "relative", display: "inline-block" }}
+                className={`
+                  group relative block py-2 text-lg uppercase
+                  ${textColor} ${hoverColor}
+                  ${isActive("/booking") ? "text-gold" : ""}
+                  transition-all duration-300 ease-in-out
+                `}
               >
-                Sign Up
-                <span
-                  className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 origin-left transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-                  style={{ display: "block" }}
-                />
-              </button>
-            </>
-          )}
+                Book Now
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </Link>
+
+              <Link
+                to="/fleet"
+                className={`
+                  group relative block py-2 text-lg uppercase
+                  ${textColor} ${hoverColor}
+                  ${isActive("/fleet") ? "text-gold" : ""}
+                  transition-all duration-300 ease-in-out
+                `}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Our Fleet
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </Link>
+
+              <Link
+                to="/services"
+                className={`
+                  group relative block py-2 text-lg uppercase
+                  ${textColor} ${hoverColor}
+                  ${isActive("/services") ? "text-gold" : ""}
+                  transition-all duration-300 ease-in-out
+                `}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                What We Offer
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </Link>
+
+              <Link
+                to="/about"
+                className={`
+                  group relative block py-2 text-lg uppercase
+                  ${textColor} ${hoverColor}
+                  ${isActive("/about") ? "text-gold" : ""}
+                  transition-all duration-300 ease-in-out
+                `}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Our Story
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+              </Link>
+
+              {user && (
+                <Link
+                  to="/profile"
+                  className={`
+                    group relative block py-2 text-lg uppercase
+                    ${textColor} ${hoverColor}
+                    ${isActive("/profile") ? "text-gold" : ""}
+                    transition-all duration-300 ease-in-out
+                  `}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Profile
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                </Link>
+              )}
+
+              {user ? (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className={`
+                    group relative block py-2 text-lg uppercase text-left
+                    ${textColor} ${hoverColor}
+                    transition-all duration-300 ease-in-out
+                  `}
+                >
+                  Logout
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      handleAuthClick("login");
+                      setIsMenuOpen(false);
+                    }}
+                    className={`
+                      group relative block py-2 text-lg uppercase text-left
+                      ${textColor} ${hoverColor}
+                      transition-all duration-300 ease-in-out
+                    `}
+                  >
+                    Login
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleAuthClick("signup");
+                      setIsMenuOpen(false);
+                    }}
+                    className={`
+                      group relative block py-2 text-lg uppercase text-left
+                      ${textColor} ${hoverColor}
+                      transition-all duration-300 ease-in-out
+                    `}
+                  >
+                    Sign Up
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-      )}
+      </div>
 
       {/* Auth Modal */}
       <AuthModal

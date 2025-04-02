@@ -112,7 +112,7 @@ const Footer: React.FC = () => {
               <p className="flex items-center">
                 <FontAwesomeIcon icon={faPhone} className="mr-3 text-gold" />{' '}
                 <a href="tel:+15551234567" className="text-gold hover:underline">
-                  (949)-981-8497
+                  (949)-981-8417
                 </a>
               </p>
               <p className="flex items-center">
@@ -122,7 +122,7 @@ const Footer: React.FC = () => {
                 </a>
               </p>
               <p className="flex items-center">
-                <FontAwesomeIcon icon={faClock} className="mr-3 text-gold" /> 24 Hours Support Everyday
+                <FontAwesomeIcon icon={faClock} className="mr-3 text-gold" /> 24 Hours Everyday
               </p>
             </div>
           </motion.div>

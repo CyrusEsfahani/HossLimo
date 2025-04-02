@@ -1,120 +1,213 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth'; // Adjust path as needed
+import AuthModal from '../components/auth/AuthModal'; // Import AuthModal from the auth folder
 
-const About: React.FC = () => {
+const OurStory: React.FC = () => {
+  const { user } = useAuth(); // Get authentication status
+  const navigate = useNavigate(); // For programmatic navigation
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); // Control AuthModal visibility
+
+  // Handle booking button click
+  const handleBookJourney = () => {
+    if (user) {
+      navigate('/booking');
+    } else {
+      setIsAuthModalOpen(true);
+    }
+  };
+
+  // Redirect after successful login
+  useEffect(() => {
+    if (user && isAuthModalOpen) {
+      setIsAuthModalOpen(false); // Close modal
+      navigate('/booking');
+    }
+  }, [user, isAuthModalOpen, navigate]);
+
   return (
-    <div className="about-page">
-      {/* Hero Section with Image Wrapped Around */}
+    <div className="our-story-page bg-gray-50">
+      {/* Hero Section with Image Overlay */}
       <div
-        className="relative bg-cover bg-center bg-no-repeat w-full h-[400px] md:h-[600px] lg:h-[800px]"
-        // style={{ backgroundImage: "url('/assets/images/SUV.png')" }}
+        className="relative bg-cover bg-center bg-no-repeat w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px]"
+        style={{ backgroundImage: "url('/assets/images/chauffeur-service.jpg')" }}
       >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/40"></div>
         <div className="container-custom relative z-10 flex items-center justify-center h-full">
           <div className="text-center text-white">
-            <h1 className="text-sm md:text-base font-semibold mb-2 font-serif">
-              Hoss Limo Service in Los Angeles and Orange County
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 font-serif tracking-tight">
+              Our Story
             </h1>
-            <p className="text-xs md:text-sm flex items-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              Phone: <a href="tel:+19499818417" className="text-gold hover:underline ml-1">(949) 981-8417</a>
+            <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
+              Delivering excellence in luxury transportation since 2005
             </p>
           </div>
         </div>
       </div>
 
-      {/* Content Section */}
-      <div className="py-12 bg-white">
-        <div className="container-custom">
-          {/* First Section: Paragraph then Image */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
-            <div>
-              <h2 className="text-3xl font-bold mb-4 font-serif">
-                What We Provide is Luxury Transport and a Comfortable Experience for You.
+      {/* Founder Story Section */}
+      <div className="py-16 md:py-24 bg-white">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 font-serif text-gray-900">
+                Family-Owned Excellence
               </h2>
-              <p className="text-gray-600">
-                We specialize in delivering a comprehensive suite of services tailored to elevate your travel experience. Our offerings encompass rental limousine, chauffeur-driven journeys, and personalized concierge services. Whether you're seeking the independence of driving your own luxury vehicle, the refined service of a professional chauffeur, or curated concierge assistance, we are dedicated to a seamless and exceptional experience. With a commitment to excellence, we redefine travel by combining convenience, luxury, and unparalleled service, ensuring that every aspect of your journey exceeds expectations.
+              <p className="text-gray-600 mb-4 text-base sm:text-lg leading-relaxed">
+                Founded in 2005 by Serge Hossein, Hoss Limo began with a simple vision: to provide uncompromising luxury transportation with personalized service that exceeds expectations. With over two decades in the service industry, we've built our reputation on principles of reliability, comfort, and attention to detail.
+              </p>
+              <p className="text-gray-600 mb-4 text-base sm:text-lg leading-relaxed">
+                What started as a single vehicle operation has grown into a premier fleet of meticulously maintained luxury vehicles, serving discerning clients throughout Los Angeles and Orange County. Our growth has been organic, built on referrals from satisfied clients who appreciate our dedication to excellence.
+              </p>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+                Today, our family-owned business continues to uphold the values that have defined us since day one: impeccable service, professional chauffeurs, and a commitment to making every journey memorable.
               </p>
             </div>
-            <div>
-              <img
-                src="/assets/images/SUV.png"
-                alt="Luxury Vehicle"
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
-
-          {/* Second Section: Paragraph then Image */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-4 font-serif">
-                By choosing our services, you receive an all-inclusive experience for a single price!
-              </h2>
-              <p className="text-gray-600">
-                When you opt for our services, you unlock the convenience of a comprehensive package tailored to your needs, all bundled into one transparent price. Our approach ensures you enjoy a seamless and stress-free experience, combining rental cars, expert chauffeurs, and concierge services, so you can focus on what truly matters—your journey, your comfort, and your peace of mind. With us, it’s not just a ride; it’s a commitment to providing you with the utmost luxury, convenience, and value, making every aspect of your travel exceptional and worry-free.
-              </p>
-              <div className="mt-6">
-                <Link
-                  to="/booking"
-                  className="bg-blue-600 text-white px-6 py-2 rounded-full text-sm hover:bg-blue-700"
-                >
-                  Book now
-                </Link>
+            <div className="order-1 lg:order-2">
+              <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px] overflow-hidden rounded-xl shadow-2xl">
+                <img
+                  src="/assets/images/hoss.png"
+                  alt="Hoss Limo Founders"
+                  className="w-full h-full object-cover object-center transform transition-transform duration-500 hover:scale-105"
+                />
               </div>
             </div>
-            <div>
-              <img
-                src="/assets/images/SUV.png"
-                alt="Luxury Interior"
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
+          </div>
+
+          {/* Vision & Mission Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div className="order-1">
+              <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px] overflow-hidden rounded-xl shadow-2xl">
+                <img
+                  src="/assets/images/luxury-service.jpg"
+                  alt="Luxury Service"
+                  className="w-full h-full object-cover object-center transform transition-transform duration-500 hover:scale-105"
+                />
+              </div>
             </div>
+            <div className="order-2">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 font-serif text-gray-900">
+                Our Vision & Mission
+              </h2>
+              <p className="text-gray-600 mb-4 text-base sm:text-lg leading-relaxed">
+                At Hoss Limo, we envision redefining luxury transportation by creating experiences that transform travel from a necessity into a pleasure. Our mission is to provide an oasis of comfort and reliability in a fast-paced world, where every journey becomes an opportunity to relax, recharge, and arrive in style.
+              </p>
+              <p className="text-gray-600 mb-4 text-base sm:text-lg leading-relaxed">
+                We believe that exceptional service begins with understanding our clients' unique needs and preferences. That's why we take the time to build relationships with each client, ensuring a personalized experience that anticipates their requirements before they even articulate them.
+              </p>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+                Our commitment extends beyond transportation – we're dedicated to creating moments of luxury that enhance your overall experience, whether it's a corporate event, special celebration, or airport transfer.
+              </p>
+            </div>
+          </div>
+
+          {/* Values Section */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-12 font-serif text-gray-900">
+              Our Core Values
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-8 rounded-xl shadow-lg transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
+                <div className="inline-block p-4 bg-yellow-500 rounded-full text-white mb-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">
+                  Safety & Reliability
+                </h3>
+                <p className="text-gray-600 text-base leading-relaxed">
+                  Your safety is our priority. Our vehicles undergo rigorous maintenance, and our professional chauffeurs are trained to provide secure and dependable service at all times.
+                </p>
+              </div>
+              <div className="bg-white p-8 rounded-xl shadow-lg transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
+                <div className="inline-block p-4 bg-yellow-500 rounded-full text-white mb-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">
+                  Luxury Experience
+                </h3>
+                <p className="text-gray-600 text-base leading-relaxed">
+                  We go beyond transportation to create a memorable experience, with attention to detail that transforms ordinary journeys into extraordinary experiences.
+                </p>
+              </div>
+              <div className="bg-white p-8 rounded-xl shadow-lg transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
+                <div className="inline-block p-4 bg-yellow-500 rounded-full text-white mb-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905a3.61 3.61 0 01-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">
+                  Client Satisfaction
+                </h3>
+                <p className="text-gray-600 text-base leading-relaxed">
+                  Your satisfaction drives our success. We're committed to exceeding expectations with personalized service tailored to your unique preferences and requirements.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Section */}
+          <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-12 rounded-xl text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 font-serif">
+              Experience the Hoss Limo Difference
+            </h2>
+            <p className="text-lg mb-8 max-w-2xl mx-auto">
+              Join our family of satisfied clients and discover why we're the preferred choice for luxury transportation in Los Angeles and Orange County.
+            </p>
+            <button
+              onClick={handleBookJourney}
+              className="inline-block bg-white text-yellow-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-300"
+            >
+              Book Your Journey
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Statistics Section */}
-      <div className="py-20 bg-gray-50">
-        <div className="container-custom">
-          <h2 className="text-2xl uppercase tracking-wider text-gray-500 mb-2">Our customers</h2>
-          <h3 className="text-sm uppercase tracking-wider text-gray-400 mb-8">TOP PRIORITY</h3>
-          <p className="text-gray-600 mb-12">
-            Discover a new standard of luxury travel with Hoss Limo, ensuring every mile is as luxurious as your destination.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h2 className="text-6xl font-bold mb-2">
-                6<span className="text-sm align-top ml-1">MM</span>
-              </h2>
-              <p className="text-gray-600">Experience in Miles</p>
-            </div>
-            <div>
-              <h2 className="text-6xl font-bold mb-2">
-                44<span className="text-sm align-top ml-1">K</span>
-              </h2>
-              <p className="text-gray-600">Experience in Hours</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* AuthModal Integration */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialView="login"
+      />
     </div>
   );
 };
 
-export default About;
+export default OurStory;

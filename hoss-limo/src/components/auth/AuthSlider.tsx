@@ -1,4 +1,3 @@
-// src/components/auth/AuthSlider.tsx
 import React, { useState } from 'react';
 import './AuthSlider.css';
 import { useFormik } from 'formik';
@@ -54,17 +53,11 @@ const AuthSlider: React.FC<AuthSliderProps> = ({ onClose, initialView = 'login' 
     },
   });
 
-  // Signup form with Formik (adjusted to match Image 2)
+  // Signup form with Formik (adjusted to match referenced design: single "Name" field)
   const formikSignup = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    },
+    initialValues: { name: '', email: '', password: '' },
     validationSchema: Yup.object({
-      firstName: Yup.string().required('First name is required'),
-      lastName: Yup.string().required('Last name is required'),
+      name: Yup.string().required('Name is required'),
       email: Yup.string().email('Invalid email address').required('Email is required'),
       password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
@@ -72,8 +65,7 @@ const AuthSlider: React.FC<AuthSliderProps> = ({ onClose, initialView = 'login' 
       setIsLoading(true);
       setErrorMessage(null);
       try {
-        // Assuming signup accepts displayName as firstName + lastName
-        await signup(values.email, values.password, `${values.firstName} ${values.lastName}`);
+        await signup(values.email, values.password, values.name);
         onClose();
       } catch (error: any) {
         setErrorMessage(error.message);
@@ -93,12 +85,12 @@ const AuthSlider: React.FC<AuthSliderProps> = ({ onClose, initialView = 'login' 
         <div className="signin-signup">
           {/* Sign In Form */}
           <form onSubmit={formikLogin.handleSubmit} className="sign-in-form">
-            <h2>Log In</h2>
+            <h2>Welcome back!</h2>
             <div className="input-field">
               <i className="fas fa-envelope"></i>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Email address"
                 name="email"
                 onChange={formikLogin.handleChange}
                 onBlur={formikLogin.handleBlur}
@@ -123,51 +115,33 @@ const AuthSlider: React.FC<AuthSliderProps> = ({ onClose, initialView = 'login' 
               <div className="error-message">{formikLogin.errors.password}</div>
             )}
             <button type="submit" className="btn" disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Log In'}
+              {isLoading ? 'Logging in...' : 'SIGN IN'}
             </button>
-            <p className="social-text">or register with</p>
+            <p className="social-text">or sign in with</p>
             <div className="social-media">
               <button type="button" className="social-btn" onClick={handleGoogleSignIn} disabled={isLoading}>
                 <i className="fab fa-google"></i> Google
               </button>
-              {/* Add Apple button if desired */}
             </div>
             {errorMessage && <div className="error-message" style={{ marginTop: '10px' }}>{errorMessage}</div>}
           </form>
 
           {/* Sign Up Form */}
           <form onSubmit={formikSignup.handleSubmit} className="sign-up-form">
-            <h2>Create an account</h2>
-            <p className="toggle-text">
-              Already have an account? <span onClick={() => setSignUpMode(false)}>Log in</span>
-            </p>
+            <h2>Create An Account</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>
               <input
                 type="text"
-                placeholder="First name"
-                name="firstName"
+                placeholder="Name"
+                name="name"
                 onChange={formikSignup.handleChange}
                 onBlur={formikSignup.handleBlur}
-                value={formikSignup.values.firstName}
+                value={formikSignup.values.name}
               />
             </div>
-            {formikSignup.touched.firstName && formikSignup.errors.firstName && (
-              <div className="error-message">{formikSignup.errors.firstName}</div>
-            )}
-            <div className="input-field">
-              <i className="fas fa-user"></i>
-              <input
-                type="text"
-                placeholder="Last name"
-                name="lastName"
-                onChange={formikSignup.handleChange}
-                onBlur={formikSignup.handleBlur}
-                value={formikSignup.values.lastName}
-              />
-            </div>
-            {formikSignup.touched.lastName && formikSignup.errors.lastName && (
-              <div className="error-message">{formikSignup.errors.lastName}</div>
+            {formikSignup.touched.name && formikSignup.errors.name && (
+              <div className="error-message">{formikSignup.errors.name}</div>
             )}
             <div className="input-field">
               <i className="fas fa-envelope"></i>
@@ -202,14 +176,13 @@ const AuthSlider: React.FC<AuthSliderProps> = ({ onClose, initialView = 'login' 
               <label htmlFor="terms">I agree to the Terms & Conditions</label>
             </div>
             <button type="submit" className="btn" disabled={isLoading}>
-              {isLoading ? 'Creating...' : 'Create account'}
+              {isLoading ? 'Creating...' : 'SIGN UP'}
             </button>
             <p className="social-text">or register with</p>
             <div className="social-media">
               <button type="button" className="social-btn" onClick={handleGoogleSignIn} disabled={isLoading}>
                 <i className="fab fa-google"></i> Google
               </button>
-              {/* Add Apple button if desired */}
             </div>
             {errorMessage && <div className="error-message" style={{ marginTop: '10px' }}>{errorMessage}</div>}
           </form>
@@ -221,10 +194,10 @@ const AuthSlider: React.FC<AuthSliderProps> = ({ onClose, initialView = 'login' 
         {/* Panel for sign-up mode (encourages login) */}
         <div className="panel panel-left">
           <div className="content">
-            <h3>Already A member?</h3>
-            <p>Sign in with your email and password.</p>
+            <h3>Already have an account?</h3>
+            <p>Sign in with your email & password</p>
             <button className="btn transparent" onClick={() => setSignUpMode(false)}>
-              Back to Log In
+              SIGN IN
             </button>
           </div>
         </div>
@@ -232,9 +205,9 @@ const AuthSlider: React.FC<AuthSliderProps> = ({ onClose, initialView = 'login' 
         <div className="panel panel-right">
           <div className="content">
             <h3>Don't have an account?</h3>
-            <p>Start your journey with one click.</p>
+            <p>Start your journey in one click</p>
             <button className="btn transparent" onClick={() => setSignUpMode(true)}>
-            Sign Up
+              SIGN UP
             </button>
           </div>
         </div>
