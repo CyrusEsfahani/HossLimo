@@ -1,7 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth'; // Adjust path as needed
+import AuthModal from '../components/auth/AuthModal'; // Import AuthModal from the auth folder
 
 const Services: React.FC = () => {
+  const { user } = useAuth(); // Get authentication status
+  const navigate = useNavigate(); // For programmatic navigation
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); // Control AuthModal visibility
+
   const dummyServices = [
     {
       id: '1',
@@ -43,6 +49,23 @@ const Services: React.FC = () => {
       imageUrl: '/assets/images/family.png',
     },
   ];
+
+  // Handle "Book Now" button click
+  const handleBookNow = () => {
+    if (user) {
+      navigate('/booking'); // Redirect to booking page if user is logged in
+    } else {
+      setIsAuthModalOpen(true); // Open login/sign-up modal if user is not logged in
+    }
+  };
+
+  // Redirect to booking page after successful login
+  useEffect(() => {
+    if (user && isAuthModalOpen) {
+      setIsAuthModalOpen(false); // Close the modal
+      navigate('/booking'); // Redirect to booking page
+    }
+  }, [user, isAuthModalOpen, navigate]);
 
   return (
     <div className="w-full">
@@ -121,12 +144,12 @@ const Services: React.FC = () => {
               journey an experience that exceeds your expectations. Relax, enjoy the ride, and let
               us handle the details.
             </p>
-            <Link
-              to="/booking"
+            <button
+              onClick={handleBookNow}
               className="inline-block bg-black text-white font-semibold py-3 px-6 rounded-lg shadow hover:shadow-lg transition-transform transform hover:-translate-y-1"
             >
               Book Now
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -150,8 +173,8 @@ const Services: React.FC = () => {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                   <p className="text-gray-600 mb-4">{service.description}</p>
-                  <Link
-                    to="/booking"
+                  <button
+                    onClick={handleBookNow}
                     className="text-black font-medium hover:underline flex items-center"
                   >
                     Book Now
@@ -169,13 +192,20 @@ const Services: React.FC = () => {
                         d="M9 5l7 7-7 7"
                       />
                     </svg>
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* AuthModal Integration */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialView="login"
+      />
     </div>
   );
 };

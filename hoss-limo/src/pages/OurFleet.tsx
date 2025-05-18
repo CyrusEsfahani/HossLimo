@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; // Adjust path as needed
 import AuthModal from '../components/auth/AuthModal'; // Import AuthModal from the auth folder
 
-// Vehicle interface
+// Vehicle interface (updated: removed priceHour)
 interface Vehicle {
   id: string;
   name: string;
@@ -11,7 +11,6 @@ interface Vehicle {
   image: string;
   interiorImages: string[];
   capacity: string;
-  priceHour: number;
   amenities: string[];
   features: { [key: string]: boolean };
 }
@@ -23,7 +22,7 @@ const OurFleet: React.FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); // Control AuthModal visibility
   const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(null); // Track selected vehicle
 
-  // Fleet data
+  // Updated fleet data
   const fleetData: Vehicle[] = [
     {
       id: 'suburban-lt-2021',
@@ -35,14 +34,11 @@ const OurFleet: React.FC = () => {
         '/assets/images/interior2.png',
         '/assets/images/interior3.png',
       ],
-      capacity: 'Up to 6 passengers',
-      priceHour: 80,
-      amenities: ['Wi-Fi', 'Music', 'TV', 'Drinks'],
+      capacity: 'Up to 7 passengers', // Updated capacity
+      amenities: ['Music', 'Drinks'], // Removed Wi-Fi and TV
       features: {
         luggage: true,
-        wifi: true,
         music: true,
-        tv: true,
         drinks: true,
         leatherInterior: true,
       },
@@ -57,14 +53,11 @@ const OurFleet: React.FC = () => {
         '/assets/images/interior2.png',
         '/assets/images/interior3.png',
       ],
-      capacity: 'Up to 6 passengers',
-      priceHour: 95,
-      amenities: ['Wi-Fi', 'Music', 'TV', 'Drinks'],
+      capacity: 'Up to 7 passengers', // Updated capacity
+      amenities: ['Music', 'Drinks'], // Removed Wi-Fi and TV
       features: {
         luggage: true,
-        wifi: true,
         music: true,
-        tv: true,
         drinks: true,
         leatherInterior: true,
       },
@@ -119,7 +112,7 @@ const OurFleet: React.FC = () => {
             {fleetData.map((vehicle) => (
               <div
                 key={vehicle.id}
-                className="bg-gradient-to-b from-white to-gray-50 rounded-lg overflow-hidden shadow-xl border border-gray-200 transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2"
+                className="bg-gradient-to-b from-white to-gray-50 rounded-lg overflow-hidden shadow-xl border border-gray-200 transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105"
               >
                 <div className="relative h-64 w-full">
                   <img
@@ -127,9 +120,7 @@ const OurFleet: React.FC = () => {
                     alt={vehicle.name}
                     className="absolute inset-0 w-full h-full object-contain"
                   />
-                  <div className="absolute top-0 right-0 bg-blue-600 text-white py-1 px-4 rounded-bl-lg z-10">
-                    <span className="text-sm font-semibold">20% OFF</span>
-                  </div>
+                  {/* Removed 20% OFF badge */}
                 </div>
 
                 <div className="p-6">
@@ -142,23 +133,16 @@ const OurFleet: React.FC = () => {
                       {vehicle.amenities.map((amenity, index) => (
                         <span
                           key={index}
-                          className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"
+                          className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200"
                         >
                           {amenity}
                         </span>
                       ))}
                     </div>
-                    <p className="text-gray-500 mb-2">All inclusive</p>
+                    {/* Removed "All inclusive" and hourly rate */}
                   </div>
 
-                  <div className="flex justify-between items-center mb-6">
-                    <div>
-                      <p className="text-sm text-gray-500">From</p>
-                      <p className="text-3xl font-bold text-gray-800">
-                        ${vehicle.priceHour}
-                        <span className="text-sm text-gray-500 font-normal">/ hour</span>
-                      </p>
-                    </div>
+                  <div className="flex justify-end items-center mb-6">
                     <button
                       onClick={() => toggleVehicleDetails(vehicle.id)}
                       className="flex items-center text-blue-600 hover:text-blue-800"
@@ -186,7 +170,7 @@ const OurFleet: React.FC = () => {
                   <div className="flex justify-center">
                     <button
                       onClick={() => handleBookNow(vehicle.id)}
-                      className="w-full bg-blue-600 text-white text-center py-3 rounded-lg transition duration-300 hover:bg-blue-700"
+                      className="w-full bg-blue-600 text-white text-center py-3 rounded-lg transition duration-300 hover:bg-blue-700 hover:shadow-lg"
                     >
                       Book Now
                     </button>
@@ -203,27 +187,11 @@ const OurFleet: React.FC = () => {
                           key={index}
                           src={img}
                           alt={`${vehicle.name} Interior ${index + 1}`}
-                          className="rounded-md h-24 w-full object-cover"
+                          className="rounded-md h-24 w-full object-cover hover:scale-110 transition-transform duration-300 cursor-pointer"
                         />
                       ))}
                     </div>
                     <div className="grid grid-cols-2 gap-y-2 mb-4">
-                      <div className="flex items-center">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-sm">Wi-Fi</span>
-                      </div>
                       <div className="flex items-center">
                         <svg
                           className="h-5 w-5 text-green-500 mr-2"
@@ -288,31 +256,16 @@ const OurFleet: React.FC = () => {
                         </svg>
                         <span className="text-sm">Complimentary Drinks</span>
                       </div>
-                      <div className="flex items-center">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-sm">Entertainment System</span>
-                      </div>
+                      {/* Removed Wi-Fi and Entertainment System */}
                     </div>
-                    <p className="text-sm text-gray-600 mb-4">
+                    {/* <p className="text-sm text-gray-600 mb-4">
                       This week's chauffeured {vehicle.name} bookings: 87 hours
-                    </p>
+                    </p> */}
                     <button
                       onClick={() => handleBookNow(vehicle.id)}
-                      className="block w-full text-center bg-gray-800 text-white py-3 rounded-lg transition duration-300 hover:bg-gray-900"
+                      className="block w-full text-center bg-gray-800 text-white py-3 rounded-lg transition duration-300 hover:bg-gray-900 hover:shadow-lg"
                     >
-                      Book Limousine
+                      Book Vehicle
                     </button>
                   </div>
                 )}
